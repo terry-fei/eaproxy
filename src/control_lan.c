@@ -1,4 +1,5 @@
 #include "eaproxy.h"
+
 int sock_lan; //连接
 struct ifreq if_lan; //网络接口
 void find_lan(char *interface) { //打开lan连接
@@ -69,6 +70,15 @@ void work_lan(void) { //lan线程
   unsigned char buf_lan[1024]; //缓冲区
   while ((len_lan = recvfrom(sock_lan, buf_lan, 1024, 0, NULL, NULL)) > 0) { //循环接收
     puts("get packets form lan");
+    int i;
+    for (i = 0; i < len_lan; ++i) {
+      printf("%02x", buf_lan[i]);
+      if (i % 16 == 0) {
+        printf("\n");
+      }
+    }
+
+    send_wan(buf_lan, len_lan);
     fflush(stdout); //刷新输出缓冲区
   } //while
   error("lan recvfrom() error");  //监听失败

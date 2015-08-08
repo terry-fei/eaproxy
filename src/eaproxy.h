@@ -14,16 +14,8 @@
 #include <netinet/in.h>
 #include <linux/if_packet.h>
 //MAIN
-static const unsigned char X_PRE = 0; //初始状态，捕捉start包//initialization
-static const unsigned char X_ON = 1; //转发状态，捕捉到hello前//transmission
-static const unsigned char X_OFF = 2; //等待状态，捕捉到hello后等待logoff//animation
-static const unsigned char X_RE = 3; //中继状态，捕捉start包和failure//repetition
-unsigned char state; //状态
-unsigned int interval; //间隔
 unsigned char promiscuous; //混杂
 //LAN
-long int time_lan; //当前时间标志
-unsigned char repeat_lan; //准备中继标志
 unsigned char mac_lan[6]; //mac
 unsigned char client_lan[6]; //mac地址
 //WAN

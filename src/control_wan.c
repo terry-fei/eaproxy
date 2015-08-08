@@ -101,7 +101,17 @@ void work_wan(void) { //wan线程
   int len_wan; //包长度
   unsigned char buf_wan[1024]; //缓冲区
   while ((len_wan = recvfrom(sock_wan, buf_wan, 1024, 0, NULL, NULL)) > 0) { //循环接收
-    
+    puts("get packets form wan");
+    int i;
+    for (i = 0; i < len_wan; ++i) {
+      printf("%02x", buf_wan[i]);
+      if (i % 16 == 0) {
+        printf("\n");
+      }
+    }
+
+    send_wan(buf_wan, len_wan);
+    fflush(stdout); //刷新输出缓冲区
     fflush(stdout); //刷新输出缓冲区
   } //while
   error("wan recvfrom() error");  //监听失败
